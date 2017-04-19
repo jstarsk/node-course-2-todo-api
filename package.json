@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
+    "deploy": "gcloud app deploy",
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
+  },
+  "engines": {
+    "node": "<=6.2.2",
+    "npm": "3.10.10"
   },
   "author": "Starsky Lara",
   "license": "ISC",
