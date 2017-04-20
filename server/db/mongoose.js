@@ -1,6 +1,23 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const nconf = require('nconf');
+
+nconf.argv().env().file('keys.json');
+
+const user = nconf.get('mongoUser');
+const pass = nconf.get('mongoPass');
+const host = nconf.get('mongoHost');
+const port = nconf.get('mongoPort');
+
+let uri = `mongodb://${user}:${pass}@${host}:${port}`;
+
+if (nconf.get('mongoDatabase')) {
+    uri = `${uri}/${nconf.get('mongoDatabase')}`;
+}
+
+console.log(uri);
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp' || 'mongodb://jstarsky:LKL-7KX-3db-c7r@ds161410.mlab.com:61410/vr-edge');
+mongoose.connect(uri || 'mongodb://localhost:27017/TodoApp');
 
-module.exports = { mongoose };
+module.exports = {mongoose};
+
