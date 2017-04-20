@@ -80,27 +80,22 @@ app.patch('/todos/:id', (req, res) => {
         return res.status(404).send();
     }
 
-    if (_.isBoolean(body.complete) && body.complete) {
-        body.completeAt = new Date().getTime();
+    if (_.isBoolean(body.completed) && body.completed) {
+        body.completedAt = new Date().getTime();
     } else {
-        body.complete = false;
-        body.completeAt = null;
+        body.completed = false;
+        body.completedAt = null;
     }
 
-    Todo.findByIdAndUpdate(id, {
-        $set: body
-    }, {
-        new: true
-    }).then((todo) => {
+    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
         if (!todo) {
-            res.status(404).send();
+            return res.status(404).send();
         }
 
         res.send({todo});
     }).catch((e) => {
         res.status(400).send();
-    });
-
+    })
 });
 
 app.listen(port, () => {
