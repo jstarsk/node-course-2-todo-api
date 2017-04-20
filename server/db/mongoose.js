@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const nconf = require('nconf');
 
-nconf.argv().env().file('keys.json');
+nconf.argv().env().file('keys/keys.json');
 
 const user = nconf.get('mongoUser');
 const pass = nconf.get('mongoPass');

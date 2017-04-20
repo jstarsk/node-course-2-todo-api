@@ -1,7 +1,0 @@
-{
-  "mongoHost": "ds161410.mlab.com",
-  "mongoPort": "61410",
-  "mongoDatabase": "vr-edge",
-  "mongoUser": "jstarsky",
-  "mongoPass": "LKL-7KX-3db-c7r"
-}
