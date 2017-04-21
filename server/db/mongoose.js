@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const nconf = require('nconf');
 
+const nconf = require('nconf');
 nconf.argv().env().file('keys/keys.json');
 
 const user = nconf.get('mongoUser');
@@ -14,10 +14,9 @@ if (nconf.get('mongoDatabase')) {
     uri = `${uri}/${nconf.get('mongoDatabase')}`;
 }
 
-console.log(uri);
 
 mongoose.Promise = global.Promise;
-mongoose.connect(uri || 'mongodb://localhost:27017/TodoApp');
+mongoose.connect(process.env.MONGODB_URI);
 
 module.exports = {mongoose};
 

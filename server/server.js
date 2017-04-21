@@ -1,6 +1,33 @@
 /**
  * Created by starsky on 4/18/17.
  */
+
+const nconf = require('nconf');
+nconf.argv().env().file('keys/keys.json');
+
+let env = process.env.NODE_ENV || 'development';
+console.log('env ******', env);
+
+if (env === 'development') {
+    process.env.PORT = 3000;
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp';
+} else if (env === 'test') {
+    process.env.PORT = 3000;
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest';
+} else if (env === 'production') {
+    const userMB = nconf.get('mongoUser');
+    const passMB = nconf.get('mongoPass');
+    const hostMB = nconf.get('mongoHost');
+    const portMB = nconf.get('mongoPort');
+
+    let uri = `mongodb://${userMB}:${passMB}@${hostMB}:${portMB}`;
+
+    if (nconf.get('mongoDatabase')) {
+        uri = `${uri}/${nconf.get('mongoDatabase')}`;
+    }
+    process.env.MONGODB_URI = uri;
+}
+
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -11,12 +38,11 @@ let {Todo} = require('./models/todo');
 let {User} = require('./models/user');
 
 let app = express();
-let port = process.env.PORT || 3000;
+let port = process.env.PORT;
 
 app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
-    console.log((req.body));
     let todo = new Todo({
         text: req.body.text
     });
