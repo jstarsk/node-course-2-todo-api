@@ -15,8 +15,14 @@ let UserSchema = new mongoose.Schema({
         minlength: 1,
         unique: true,
         validate: {
-            validator: validator.isEmail,
-            message: `{VALUE} is not a valid mail`
+            validator: (value) => {
+
+                return validator.isEmail(value);
+
+            },
+
+            message: '{VALUE} is not a valid Email'
+
         }
     },
     password: {
@@ -37,10 +43,10 @@ let UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.toJSON = function () {
-  let user = this;
-  let userObject = user.toObject();
+    let user = this;
+    let userObject = user.toObject();
 
-  return _.pick(userObject, ['_id', 'email']);
+    return _.pick(userObject, ['_id', 'email']);
 };
 
 UserSchema.methods.generateAuthToken = function () {
@@ -52,6 +58,23 @@ UserSchema.methods.generateAuthToken = function () {
 
     return user.save().then(() => {
         return token;
+    });
+};
+
+UserSchema.statics.findByToken = function (token) {
+    let User = this;
+    let decoded;
+
+    try {
+        decoded = jwt.verify(token, 'abc123');
+    } catch (e) {
+        return Promise.reject();
+    }
+
+    return User.findOne({
+        '_id': decoded._id,
+        'tokens.token': token,
+        'tokens.access': 'auth'
     });
 };
 
