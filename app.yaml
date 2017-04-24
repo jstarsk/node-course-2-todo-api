@@ -1,2 +1,4 @@
 runtime: nodejs
 env: flex
+env_variables:
+  JWT_SECRET: 'xxabcxhxhexeGVDVDEx'
