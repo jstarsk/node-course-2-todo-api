@@ -21,9 +21,7 @@ let UserSchema = new mongoose.Schema({
                 return validator.isEmail(value);
 
             },
-
             message: '{VALUE} is not a valid Email'
-
         }
     },
     password: {
