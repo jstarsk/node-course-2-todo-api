@@ -17,7 +17,7 @@ let hashedPassword ='$2a$10$Gi8ngqbEoSdKz3zgrgAdb.5KDMfLa1BbO3gDmnaZIb0Fp5u.48cu
 
 bycrypt.compare(password, hashedPassword, (err, res) => {
     console.log(res);
-})
+});
 // let data = {
 //     id: 10
 // };
