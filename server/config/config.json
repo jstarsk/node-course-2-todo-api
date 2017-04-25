@@ -10,7 +10,7 @@
     "JWT_SECRET": "123abc"
   },
   "production": {
-    "MONGODB_URI": "mongodb://jstarsky:LKL-7KX-3db-c7r@ds161410.mlab.com:61410",
+    "MONGODB_URI": "mongodb://jstarsky:LKL-7KX-3db-c7r@ds161410.mlab.com:61410/vr-edge",
     "JWT_SECRET": "123abc"
   }
 }

@@ -4,9 +4,6 @@
 
 require('./config/config');
 
-const nconf = require('nconf');
-nconf.argv().env().file('keys/keys.json');
-
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
